@@ -1,0 +1,1076 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.brain.dao.DocumentMapper">
+  <resultMap id="BaseResultMap" type="com.brain.bean.Document">
+    <id column="docId" jdbcType="INTEGER" property="docid" />
+    <result column="docChannel" jdbcType="INTEGER" property="docchannel" />
+    <result column="docVersion" jdbcType="INTEGER" property="docversion" />
+    <result column="docType" jdbcType="INTEGER" property="doctype" />
+    <result column="docTitle" jdbcType="VARCHAR" property="doctitle" />
+    <result column="docSourceName" jdbcType="VARCHAR" property="docsourcename" />
+    <result column="docStatus" jdbcType="INTEGER" property="docstatus" />
+    <result column="docAbstract" jdbcType="VARCHAR" property="docabstract" />
+    <result column="docKeywords" jdbcType="VARCHAR" property="dockeywords" />
+    <result column="docRelwords" jdbcType="VARCHAR" property="docrelwords" />
+    <result column="docPeople" jdbcType="VARCHAR" property="docpeople" />
+    <result column="docPlace" jdbcType="VARCHAR" property="docplace" />
+    <result column="docAuthor" jdbcType="VARCHAR" property="docauthor" />
+    <result column="docEditor" jdbcType="VARCHAR" property="doceditor" />
+    <result column="docAuditor" jdbcType="VARCHAR" property="docauditor" />
+    <result column="docOutupid" jdbcType="INTEGER" property="docoutupid" />
+    <result column="docValid" jdbcType="TIMESTAMP" property="docvalid" />
+    <result column="docPuburl" jdbcType="VARCHAR" property="docpuburl" />
+    <result column="docPubtime" jdbcType="TIMESTAMP" property="docpubtime" />
+    <result column="docReltime" jdbcType="TIMESTAMP" property="docreltime" />
+    <result column="cruser" jdbcType="VARCHAR" property="cruser" />
+    <result column="crtime" jdbcType="TIMESTAMP" property="crtime" />
+    <result column="docwordscount" jdbcType="INTEGER" property="docwordscount" />
+    <result column="docpro" jdbcType="INTEGER" property="docpro" />
+    <result column="titleColor" jdbcType="VARCHAR" property="titlecolor" />
+    <result column="templateId" jdbcType="INTEGER" property="templateid" />
+    <result column="attribute" jdbcType="VARCHAR" property="attribute" />
+    <result column="hiscount" jdbcType="INTEGER" property="hiscount" />
+    <result column="subdoctitle" jdbcType="VARCHAR" property="subdoctitle" />
+    <result column="attachpic" jdbcType="INTEGER" property="attachpic" />
+    <result column="doclink" jdbcType="VARCHAR" property="doclink" />
+    <result column="docFilename" jdbcType="VARCHAR" property="docfilename" />
+    <result column="opertime" jdbcType="TIMESTAMP" property="opertime" />
+    <result column="operuser" jdbcType="VARCHAR" property="operuser" />
+    <result column="videoId" jdbcType="VARCHAR" property="videoid" />
+    <result column="docClass" jdbcType="INTEGER" property="docclass" />
+    <result column="isRec" jdbcType="SMALLINT" property="isrec" />
+    <result column="docOrder" jdbcType="INTEGER" property="docorder" />
+    <result column="_recurl" jdbcType="VARCHAR" property="recurl" />
+    <result column="filePath" jdbcType="VARCHAR" property="filepath" />
+    <result column="thumb" jdbcType="VARCHAR" property="thumb" />
+    <result column="linkUrl" jdbcType="VARCHAR" property="linkurl" />
+    <result column="tempid" jdbcType="INTEGER" property="tempid" />
+    <result column="trsDocID" jdbcType="INTEGER" property="trsdocid" />
+    <result column="parentPath" jdbcType="VARCHAR" property="parentpath" />
+    <result column="imgLinks" jdbcType="VARCHAR" property="imglinks" />
+    <result column="parentLink" jdbcType="VARCHAR" property="parentlink" />
+    <result column="docbak" jdbcType="INTEGER" property="docbak" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.brain.bean.DocumentWithBLOBs">
+    <result column="docContent" jdbcType="LONGVARCHAR" property="doccontent" />
+    <result column="docHtmlCon" jdbcType="LONGVARCHAR" property="dochtmlcon" />
+    <result column="docPubhtmlcon" jdbcType="LONGVARCHAR" property="docpubhtmlcon" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    docId, docChannel, docVersion, docType, docTitle, docSourceName, docStatus, docAbstract, 
+    docKeywords, docRelwords, docPeople, docPlace, docAuthor, docEditor, docAuditor, 
+    docOutupid, docValid, docPuburl, docPubtime, docReltime, cruser, crtime, docwordscount, 
+    docpro, titleColor, templateId, attribute, hiscount, subdoctitle, attachpic, doclink, 
+    docFilename, opertime, operuser, videoId, docClass, isRec, docOrder, _recurl, filePath, 
+    thumb, linkUrl, tempid, trsDocID, parentPath, imgLinks, parentLink, docbak
+  </sql>
+  <sql id="Blob_Column_List">
+    docContent,docHtmlCon,docPubhtmlcon
+  </sql>
+  <sql id="Title_Column_List">
+  	docTitle,docAuthor
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.brain.bean.DocumentExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sun0769_document
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.brain.bean.DocumentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sun0769_document
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sun0769_document
+    where docId = #{docid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByTitle" resultMap="BaseResultMap">
+    select 
+    <include refid="Title_Column_List" />
+    from sun0769_document
+    where docTitle like "%${_parameter}%"
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sun0769_document
+    where docId = #{docid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.brain.bean.DocumentExample">
+    delete from sun0769_document
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.brain.bean.DocumentWithBLOBs">
+    insert into sun0769_document (docId, docChannel, docVersion, 
+      docType, docTitle, docSourceName, 
+      docStatus, docAbstract, docKeywords, 
+      docRelwords, docPeople, docPlace, 
+      docAuthor, docEditor, docAuditor, 
+      docOutupid, docValid, docPuburl, 
+      docPubtime, docReltime, cruser, 
+      crtime, docwordscount, docpro, 
+      titleColor, templateId, attribute, 
+      hiscount, subdoctitle, attachpic, 
+      doclink, docFilename, opertime, 
+      operuser, videoId, docClass, 
+      isRec, docOrder, _recurl, 
+      filePath, thumb, linkUrl, 
+      tempid, trsDocID, parentPath, 
+      imgLinks, parentLink, docbak, 
+      docContent, docHtmlCon, docPubhtmlcon
+      )
+    values (#{docid,jdbcType=INTEGER}, #{docchannel,jdbcType=INTEGER}, #{docversion,jdbcType=INTEGER}, 
+      #{doctype,jdbcType=INTEGER}, #{doctitle,jdbcType=VARCHAR}, #{docsourcename,jdbcType=VARCHAR}, 
+      #{docstatus,jdbcType=INTEGER}, #{docabstract,jdbcType=VARCHAR}, #{dockeywords,jdbcType=VARCHAR}, 
+      #{docrelwords,jdbcType=VARCHAR}, #{docpeople,jdbcType=VARCHAR}, #{docplace,jdbcType=VARCHAR}, 
+      #{docauthor,jdbcType=VARCHAR}, #{doceditor,jdbcType=VARCHAR}, #{docauditor,jdbcType=VARCHAR}, 
+      #{docoutupid,jdbcType=INTEGER}, #{docvalid,jdbcType=TIMESTAMP}, #{docpuburl,jdbcType=VARCHAR}, 
+      #{docpubtime,jdbcType=TIMESTAMP}, #{docreltime,jdbcType=TIMESTAMP}, #{cruser,jdbcType=VARCHAR}, 
+      #{crtime,jdbcType=TIMESTAMP}, #{docwordscount,jdbcType=INTEGER}, #{docpro,jdbcType=INTEGER}, 
+      #{titlecolor,jdbcType=VARCHAR}, #{templateid,jdbcType=INTEGER}, #{attribute,jdbcType=VARCHAR}, 
+      #{hiscount,jdbcType=INTEGER}, #{subdoctitle,jdbcType=VARCHAR}, #{attachpic,jdbcType=INTEGER}, 
+      #{doclink,jdbcType=VARCHAR}, #{docfilename,jdbcType=VARCHAR}, #{opertime,jdbcType=TIMESTAMP}, 
+      #{operuser,jdbcType=VARCHAR}, #{videoid,jdbcType=VARCHAR}, #{docclass,jdbcType=INTEGER}, 
+      #{isrec,jdbcType=SMALLINT}, #{docorder,jdbcType=INTEGER}, #{recurl,jdbcType=VARCHAR}, 
+      #{filepath,jdbcType=VARCHAR}, #{thumb,jdbcType=VARCHAR}, #{linkurl,jdbcType=VARCHAR}, 
+      #{tempid,jdbcType=INTEGER}, #{trsdocid,jdbcType=INTEGER}, #{parentpath,jdbcType=VARCHAR}, 
+      #{imglinks,jdbcType=VARCHAR}, #{parentlink,jdbcType=VARCHAR}, #{docbak,jdbcType=INTEGER}, 
+      #{doccontent,jdbcType=LONGVARCHAR}, #{dochtmlcon,jdbcType=LONGVARCHAR}, #{docpubhtmlcon,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.brain.bean.DocumentWithBLOBs">
+    insert into sun0769_document
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="docid != null">
+        docId,
+      </if>
+      <if test="docchannel != null">
+        docChannel,
+      </if>
+      <if test="docversion != null">
+        docVersion,
+      </if>
+      <if test="doctype != null">
+        docType,
+      </if>
+      <if test="doctitle != null">
+        docTitle,
+      </if>
+      <if test="docsourcename != null">
+        docSourceName,
+      </if>
+      <if test="docstatus != null">
+        docStatus,
+      </if>
+      <if test="docabstract != null">
+        docAbstract,
+      </if>
+      <if test="dockeywords != null">
+        docKeywords,
+      </if>
+      <if test="docrelwords != null">
+        docRelwords,
+      </if>
+      <if test="docpeople != null">
+        docPeople,
+      </if>
+      <if test="docplace != null">
+        docPlace,
+      </if>
+      <if test="docauthor != null">
+        docAuthor,
+      </if>
+      <if test="doceditor != null">
+        docEditor,
+      </if>
+      <if test="docauditor != null">
+        docAuditor,
+      </if>
+      <if test="docoutupid != null">
+        docOutupid,
+      </if>
+      <if test="docvalid != null">
+        docValid,
+      </if>
+      <if test="docpuburl != null">
+        docPuburl,
+      </if>
+      <if test="docpubtime != null">
+        docPubtime,
+      </if>
+      <if test="docreltime != null">
+        docReltime,
+      </if>
+      <if test="cruser != null">
+        cruser,
+      </if>
+      <if test="crtime != null">
+        crtime,
+      </if>
+      <if test="docwordscount != null">
+        docwordscount,
+      </if>
+      <if test="docpro != null">
+        docpro,
+      </if>
+      <if test="titlecolor != null">
+        titleColor,
+      </if>
+      <if test="templateid != null">
+        templateId,
+      </if>
+      <if test="attribute != null">
+        attribute,
+      </if>
+      <if test="hiscount != null">
+        hiscount,
+      </if>
+      <if test="subdoctitle != null">
+        subdoctitle,
+      </if>
+      <if test="attachpic != null">
+        attachpic,
+      </if>
+      <if test="doclink != null">
+        doclink,
+      </if>
+      <if test="docfilename != null">
+        docFilename,
+      </if>
+      <if test="opertime != null">
+        opertime,
+      </if>
+      <if test="operuser != null">
+        operuser,
+      </if>
+      <if test="videoid != null">
+        videoId,
+      </if>
+      <if test="docclass != null">
+        docClass,
+      </if>
+      <if test="isrec != null">
+        isRec,
+      </if>
+      <if test="docorder != null">
+        docOrder,
+      </if>
+      <if test="recurl != null">
+        _recurl,
+      </if>
+      <if test="filepath != null">
+        filePath,
+      </if>
+      <if test="thumb != null">
+        thumb,
+      </if>
+      <if test="linkurl != null">
+        linkUrl,
+      </if>
+      <if test="tempid != null">
+        tempid,
+      </if>
+      <if test="trsdocid != null">
+        trsDocID,
+      </if>
+      <if test="parentpath != null">
+        parentPath,
+      </if>
+      <if test="imglinks != null">
+        imgLinks,
+      </if>
+      <if test="parentlink != null">
+        parentLink,
+      </if>
+      <if test="docbak != null">
+        docbak,
+      </if>
+      <if test="doccontent != null">
+        docContent,
+      </if>
+      <if test="dochtmlcon != null">
+        docHtmlCon,
+      </if>
+      <if test="docpubhtmlcon != null">
+        docPubhtmlcon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="docid != null">
+        #{docid,jdbcType=INTEGER},
+      </if>
+      <if test="docchannel != null">
+        #{docchannel,jdbcType=INTEGER},
+      </if>
+      <if test="docversion != null">
+        #{docversion,jdbcType=INTEGER},
+      </if>
+      <if test="doctype != null">
+        #{doctype,jdbcType=INTEGER},
+      </if>
+      <if test="doctitle != null">
+        #{doctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="docsourcename != null">
+        #{docsourcename,jdbcType=VARCHAR},
+      </if>
+      <if test="docstatus != null">
+        #{docstatus,jdbcType=INTEGER},
+      </if>
+      <if test="docabstract != null">
+        #{docabstract,jdbcType=VARCHAR},
+      </if>
+      <if test="dockeywords != null">
+        #{dockeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="docrelwords != null">
+        #{docrelwords,jdbcType=VARCHAR},
+      </if>
+      <if test="docpeople != null">
+        #{docpeople,jdbcType=VARCHAR},
+      </if>
+      <if test="docplace != null">
+        #{docplace,jdbcType=VARCHAR},
+      </if>
+      <if test="docauthor != null">
+        #{docauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="doceditor != null">
+        #{doceditor,jdbcType=VARCHAR},
+      </if>
+      <if test="docauditor != null">
+        #{docauditor,jdbcType=VARCHAR},
+      </if>
+      <if test="docoutupid != null">
+        #{docoutupid,jdbcType=INTEGER},
+      </if>
+      <if test="docvalid != null">
+        #{docvalid,jdbcType=TIMESTAMP},
+      </if>
+      <if test="docpuburl != null">
+        #{docpuburl,jdbcType=VARCHAR},
+      </if>
+      <if test="docpubtime != null">
+        #{docpubtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="docreltime != null">
+        #{docreltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cruser != null">
+        #{cruser,jdbcType=VARCHAR},
+      </if>
+      <if test="crtime != null">
+        #{crtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="docwordscount != null">
+        #{docwordscount,jdbcType=INTEGER},
+      </if>
+      <if test="docpro != null">
+        #{docpro,jdbcType=INTEGER},
+      </if>
+      <if test="titlecolor != null">
+        #{titlecolor,jdbcType=VARCHAR},
+      </if>
+      <if test="templateid != null">
+        #{templateid,jdbcType=INTEGER},
+      </if>
+      <if test="attribute != null">
+        #{attribute,jdbcType=VARCHAR},
+      </if>
+      <if test="hiscount != null">
+        #{hiscount,jdbcType=INTEGER},
+      </if>
+      <if test="subdoctitle != null">
+        #{subdoctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="attachpic != null">
+        #{attachpic,jdbcType=INTEGER},
+      </if>
+      <if test="doclink != null">
+        #{doclink,jdbcType=VARCHAR},
+      </if>
+      <if test="docfilename != null">
+        #{docfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="opertime != null">
+        #{opertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operuser != null">
+        #{operuser,jdbcType=VARCHAR},
+      </if>
+      <if test="videoid != null">
+        #{videoid,jdbcType=VARCHAR},
+      </if>
+      <if test="docclass != null">
+        #{docclass,jdbcType=INTEGER},
+      </if>
+      <if test="isrec != null">
+        #{isrec,jdbcType=SMALLINT},
+      </if>
+      <if test="docorder != null">
+        #{docorder,jdbcType=INTEGER},
+      </if>
+      <if test="recurl != null">
+        #{recurl,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null">
+        #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="thumb != null">
+        #{thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="linkurl != null">
+        #{linkurl,jdbcType=VARCHAR},
+      </if>
+      <if test="tempid != null">
+        #{tempid,jdbcType=INTEGER},
+      </if>
+      <if test="trsdocid != null">
+        #{trsdocid,jdbcType=INTEGER},
+      </if>
+      <if test="parentpath != null">
+        #{parentpath,jdbcType=VARCHAR},
+      </if>
+      <if test="imglinks != null">
+        #{imglinks,jdbcType=VARCHAR},
+      </if>
+      <if test="parentlink != null">
+        #{parentlink,jdbcType=VARCHAR},
+      </if>
+      <if test="docbak != null">
+        #{docbak,jdbcType=INTEGER},
+      </if>
+      <if test="doccontent != null">
+        #{doccontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="dochtmlcon != null">
+        #{dochtmlcon,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="docpubhtmlcon != null">
+        #{docpubhtmlcon,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.brain.bean.DocumentExample" resultType="java.lang.Long">
+    select count(*) from sun0769_document
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sun0769_document
+    <set>
+      <if test="record.docid != null">
+        docId = #{record.docid,jdbcType=INTEGER},
+      </if>
+      <if test="record.docchannel != null">
+        docChannel = #{record.docchannel,jdbcType=INTEGER},
+      </if>
+      <if test="record.docversion != null">
+        docVersion = #{record.docversion,jdbcType=INTEGER},
+      </if>
+      <if test="record.doctype != null">
+        docType = #{record.doctype,jdbcType=INTEGER},
+      </if>
+      <if test="record.doctitle != null">
+        docTitle = #{record.doctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docsourcename != null">
+        docSourceName = #{record.docsourcename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docstatus != null">
+        docStatus = #{record.docstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.docabstract != null">
+        docAbstract = #{record.docabstract,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dockeywords != null">
+        docKeywords = #{record.dockeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docrelwords != null">
+        docRelwords = #{record.docrelwords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docpeople != null">
+        docPeople = #{record.docpeople,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docplace != null">
+        docPlace = #{record.docplace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docauthor != null">
+        docAuthor = #{record.docauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doceditor != null">
+        docEditor = #{record.doceditor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docauditor != null">
+        docAuditor = #{record.docauditor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docoutupid != null">
+        docOutupid = #{record.docoutupid,jdbcType=INTEGER},
+      </if>
+      <if test="record.docvalid != null">
+        docValid = #{record.docvalid,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.docpuburl != null">
+        docPuburl = #{record.docpuburl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docpubtime != null">
+        docPubtime = #{record.docpubtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.docreltime != null">
+        docReltime = #{record.docreltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cruser != null">
+        cruser = #{record.cruser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crtime != null">
+        crtime = #{record.crtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.docwordscount != null">
+        docwordscount = #{record.docwordscount,jdbcType=INTEGER},
+      </if>
+      <if test="record.docpro != null">
+        docpro = #{record.docpro,jdbcType=INTEGER},
+      </if>
+      <if test="record.titlecolor != null">
+        titleColor = #{record.titlecolor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.templateid != null">
+        templateId = #{record.templateid,jdbcType=INTEGER},
+      </if>
+      <if test="record.attribute != null">
+        attribute = #{record.attribute,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hiscount != null">
+        hiscount = #{record.hiscount,jdbcType=INTEGER},
+      </if>
+      <if test="record.subdoctitle != null">
+        subdoctitle = #{record.subdoctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachpic != null">
+        attachpic = #{record.attachpic,jdbcType=INTEGER},
+      </if>
+      <if test="record.doclink != null">
+        doclink = #{record.doclink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docfilename != null">
+        docFilename = #{record.docfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.opertime != null">
+        opertime = #{record.opertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operuser != null">
+        operuser = #{record.operuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.videoid != null">
+        videoId = #{record.videoid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docclass != null">
+        docClass = #{record.docclass,jdbcType=INTEGER},
+      </if>
+      <if test="record.isrec != null">
+        isRec = #{record.isrec,jdbcType=SMALLINT},
+      </if>
+      <if test="record.docorder != null">
+        docOrder = #{record.docorder,jdbcType=INTEGER},
+      </if>
+      <if test="record.recurl != null">
+        _recurl = #{record.recurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filepath != null">
+        filePath = #{record.filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thumb != null">
+        thumb = #{record.thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkurl != null">
+        linkUrl = #{record.linkurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tempid != null">
+        tempid = #{record.tempid,jdbcType=INTEGER},
+      </if>
+      <if test="record.trsdocid != null">
+        trsDocID = #{record.trsdocid,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentpath != null">
+        parentPath = #{record.parentpath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imglinks != null">
+        imgLinks = #{record.imglinks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentlink != null">
+        parentLink = #{record.parentlink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docbak != null">
+        docbak = #{record.docbak,jdbcType=INTEGER},
+      </if>
+      <if test="record.doccontent != null">
+        docContent = #{record.doccontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.dochtmlcon != null">
+        docHtmlCon = #{record.dochtmlcon,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.docpubhtmlcon != null">
+        docPubhtmlcon = #{record.docpubhtmlcon,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update sun0769_document
+    set docId = #{record.docid,jdbcType=INTEGER},
+      docChannel = #{record.docchannel,jdbcType=INTEGER},
+      docVersion = #{record.docversion,jdbcType=INTEGER},
+      docType = #{record.doctype,jdbcType=INTEGER},
+      docTitle = #{record.doctitle,jdbcType=VARCHAR},
+      docSourceName = #{record.docsourcename,jdbcType=VARCHAR},
+      docStatus = #{record.docstatus,jdbcType=INTEGER},
+      docAbstract = #{record.docabstract,jdbcType=VARCHAR},
+      docKeywords = #{record.dockeywords,jdbcType=VARCHAR},
+      docRelwords = #{record.docrelwords,jdbcType=VARCHAR},
+      docPeople = #{record.docpeople,jdbcType=VARCHAR},
+      docPlace = #{record.docplace,jdbcType=VARCHAR},
+      docAuthor = #{record.docauthor,jdbcType=VARCHAR},
+      docEditor = #{record.doceditor,jdbcType=VARCHAR},
+      docAuditor = #{record.docauditor,jdbcType=VARCHAR},
+      docOutupid = #{record.docoutupid,jdbcType=INTEGER},
+      docValid = #{record.docvalid,jdbcType=TIMESTAMP},
+      docPuburl = #{record.docpuburl,jdbcType=VARCHAR},
+      docPubtime = #{record.docpubtime,jdbcType=TIMESTAMP},
+      docReltime = #{record.docreltime,jdbcType=TIMESTAMP},
+      cruser = #{record.cruser,jdbcType=VARCHAR},
+      crtime = #{record.crtime,jdbcType=TIMESTAMP},
+      docwordscount = #{record.docwordscount,jdbcType=INTEGER},
+      docpro = #{record.docpro,jdbcType=INTEGER},
+      titleColor = #{record.titlecolor,jdbcType=VARCHAR},
+      templateId = #{record.templateid,jdbcType=INTEGER},
+      attribute = #{record.attribute,jdbcType=VARCHAR},
+      hiscount = #{record.hiscount,jdbcType=INTEGER},
+      subdoctitle = #{record.subdoctitle,jdbcType=VARCHAR},
+      attachpic = #{record.attachpic,jdbcType=INTEGER},
+      doclink = #{record.doclink,jdbcType=VARCHAR},
+      docFilename = #{record.docfilename,jdbcType=VARCHAR},
+      opertime = #{record.opertime,jdbcType=TIMESTAMP},
+      operuser = #{record.operuser,jdbcType=VARCHAR},
+      videoId = #{record.videoid,jdbcType=VARCHAR},
+      docClass = #{record.docclass,jdbcType=INTEGER},
+      isRec = #{record.isrec,jdbcType=SMALLINT},
+      docOrder = #{record.docorder,jdbcType=INTEGER},
+      _recurl = #{record.recurl,jdbcType=VARCHAR},
+      filePath = #{record.filepath,jdbcType=VARCHAR},
+      thumb = #{record.thumb,jdbcType=VARCHAR},
+      linkUrl = #{record.linkurl,jdbcType=VARCHAR},
+      tempid = #{record.tempid,jdbcType=INTEGER},
+      trsDocID = #{record.trsdocid,jdbcType=INTEGER},
+      parentPath = #{record.parentpath,jdbcType=VARCHAR},
+      imgLinks = #{record.imglinks,jdbcType=VARCHAR},
+      parentLink = #{record.parentlink,jdbcType=VARCHAR},
+      docbak = #{record.docbak,jdbcType=INTEGER},
+      docContent = #{record.doccontent,jdbcType=LONGVARCHAR},
+      docHtmlCon = #{record.dochtmlcon,jdbcType=LONGVARCHAR},
+      docPubhtmlcon = #{record.docpubhtmlcon,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sun0769_document
+    set docId = #{record.docid,jdbcType=INTEGER},
+      docChannel = #{record.docchannel,jdbcType=INTEGER},
+      docVersion = #{record.docversion,jdbcType=INTEGER},
+      docType = #{record.doctype,jdbcType=INTEGER},
+      docTitle = #{record.doctitle,jdbcType=VARCHAR},
+      docSourceName = #{record.docsourcename,jdbcType=VARCHAR},
+      docStatus = #{record.docstatus,jdbcType=INTEGER},
+      docAbstract = #{record.docabstract,jdbcType=VARCHAR},
+      docKeywords = #{record.dockeywords,jdbcType=VARCHAR},
+      docRelwords = #{record.docrelwords,jdbcType=VARCHAR},
+      docPeople = #{record.docpeople,jdbcType=VARCHAR},
+      docPlace = #{record.docplace,jdbcType=VARCHAR},
+      docAuthor = #{record.docauthor,jdbcType=VARCHAR},
+      docEditor = #{record.doceditor,jdbcType=VARCHAR},
+      docAuditor = #{record.docauditor,jdbcType=VARCHAR},
+      docOutupid = #{record.docoutupid,jdbcType=INTEGER},
+      docValid = #{record.docvalid,jdbcType=TIMESTAMP},
+      docPuburl = #{record.docpuburl,jdbcType=VARCHAR},
+      docPubtime = #{record.docpubtime,jdbcType=TIMESTAMP},
+      docReltime = #{record.docreltime,jdbcType=TIMESTAMP},
+      cruser = #{record.cruser,jdbcType=VARCHAR},
+      crtime = #{record.crtime,jdbcType=TIMESTAMP},
+      docwordscount = #{record.docwordscount,jdbcType=INTEGER},
+      docpro = #{record.docpro,jdbcType=INTEGER},
+      titleColor = #{record.titlecolor,jdbcType=VARCHAR},
+      templateId = #{record.templateid,jdbcType=INTEGER},
+      attribute = #{record.attribute,jdbcType=VARCHAR},
+      hiscount = #{record.hiscount,jdbcType=INTEGER},
+      subdoctitle = #{record.subdoctitle,jdbcType=VARCHAR},
+      attachpic = #{record.attachpic,jdbcType=INTEGER},
+      doclink = #{record.doclink,jdbcType=VARCHAR},
+      docFilename = #{record.docfilename,jdbcType=VARCHAR},
+      opertime = #{record.opertime,jdbcType=TIMESTAMP},
+      operuser = #{record.operuser,jdbcType=VARCHAR},
+      videoId = #{record.videoid,jdbcType=VARCHAR},
+      docClass = #{record.docclass,jdbcType=INTEGER},
+      isRec = #{record.isrec,jdbcType=SMALLINT},
+      docOrder = #{record.docorder,jdbcType=INTEGER},
+      _recurl = #{record.recurl,jdbcType=VARCHAR},
+      filePath = #{record.filepath,jdbcType=VARCHAR},
+      thumb = #{record.thumb,jdbcType=VARCHAR},
+      linkUrl = #{record.linkurl,jdbcType=VARCHAR},
+      tempid = #{record.tempid,jdbcType=INTEGER},
+      trsDocID = #{record.trsdocid,jdbcType=INTEGER},
+      parentPath = #{record.parentpath,jdbcType=VARCHAR},
+      imgLinks = #{record.imglinks,jdbcType=VARCHAR},
+      parentLink = #{record.parentlink,jdbcType=VARCHAR},
+      docbak = #{record.docbak,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.brain.bean.DocumentWithBLOBs">
+    update sun0769_document
+    <set>
+      <if test="docchannel != null">
+        docChannel = #{docchannel,jdbcType=INTEGER},
+      </if>
+      <if test="docversion != null">
+        docVersion = #{docversion,jdbcType=INTEGER},
+      </if>
+      <if test="doctype != null">
+        docType = #{doctype,jdbcType=INTEGER},
+      </if>
+      <if test="doctitle != null">
+        docTitle = #{doctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="docsourcename != null">
+        docSourceName = #{docsourcename,jdbcType=VARCHAR},
+      </if>
+      <if test="docstatus != null">
+        docStatus = #{docstatus,jdbcType=INTEGER},
+      </if>
+      <if test="docabstract != null">
+        docAbstract = #{docabstract,jdbcType=VARCHAR},
+      </if>
+      <if test="dockeywords != null">
+        docKeywords = #{dockeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="docrelwords != null">
+        docRelwords = #{docrelwords,jdbcType=VARCHAR},
+      </if>
+      <if test="docpeople != null">
+        docPeople = #{docpeople,jdbcType=VARCHAR},
+      </if>
+      <if test="docplace != null">
+        docPlace = #{docplace,jdbcType=VARCHAR},
+      </if>
+      <if test="docauthor != null">
+        docAuthor = #{docauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="doceditor != null">
+        docEditor = #{doceditor,jdbcType=VARCHAR},
+      </if>
+      <if test="docauditor != null">
+        docAuditor = #{docauditor,jdbcType=VARCHAR},
+      </if>
+      <if test="docoutupid != null">
+        docOutupid = #{docoutupid,jdbcType=INTEGER},
+      </if>
+      <if test="docvalid != null">
+        docValid = #{docvalid,jdbcType=TIMESTAMP},
+      </if>
+      <if test="docpuburl != null">
+        docPuburl = #{docpuburl,jdbcType=VARCHAR},
+      </if>
+      <if test="docpubtime != null">
+        docPubtime = #{docpubtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="docreltime != null">
+        docReltime = #{docreltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cruser != null">
+        cruser = #{cruser,jdbcType=VARCHAR},
+      </if>
+      <if test="crtime != null">
+        crtime = #{crtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="docwordscount != null">
+        docwordscount = #{docwordscount,jdbcType=INTEGER},
+      </if>
+      <if test="docpro != null">
+        docpro = #{docpro,jdbcType=INTEGER},
+      </if>
+      <if test="titlecolor != null">
+        titleColor = #{titlecolor,jdbcType=VARCHAR},
+      </if>
+      <if test="templateid != null">
+        templateId = #{templateid,jdbcType=INTEGER},
+      </if>
+      <if test="attribute != null">
+        attribute = #{attribute,jdbcType=VARCHAR},
+      </if>
+      <if test="hiscount != null">
+        hiscount = #{hiscount,jdbcType=INTEGER},
+      </if>
+      <if test="subdoctitle != null">
+        subdoctitle = #{subdoctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="attachpic != null">
+        attachpic = #{attachpic,jdbcType=INTEGER},
+      </if>
+      <if test="doclink != null">
+        doclink = #{doclink,jdbcType=VARCHAR},
+      </if>
+      <if test="docfilename != null">
+        docFilename = #{docfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="opertime != null">
+        opertime = #{opertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operuser != null">
+        operuser = #{operuser,jdbcType=VARCHAR},
+      </if>
+      <if test="videoid != null">
+        videoId = #{videoid,jdbcType=VARCHAR},
+      </if>
+      <if test="docclass != null">
+        docClass = #{docclass,jdbcType=INTEGER},
+      </if>
+      <if test="isrec != null">
+        isRec = #{isrec,jdbcType=SMALLINT},
+      </if>
+      <if test="docorder != null">
+        docOrder = #{docorder,jdbcType=INTEGER},
+      </if>
+      <if test="recurl != null">
+        _recurl = #{recurl,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null">
+        filePath = #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="thumb != null">
+        thumb = #{thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="linkurl != null">
+        linkUrl = #{linkurl,jdbcType=VARCHAR},
+      </if>
+      <if test="tempid != null">
+        tempid = #{tempid,jdbcType=INTEGER},
+      </if>
+      <if test="trsdocid != null">
+        trsDocID = #{trsdocid,jdbcType=INTEGER},
+      </if>
+      <if test="parentpath != null">
+        parentPath = #{parentpath,jdbcType=VARCHAR},
+      </if>
+      <if test="imglinks != null">
+        imgLinks = #{imglinks,jdbcType=VARCHAR},
+      </if>
+      <if test="parentlink != null">
+        parentLink = #{parentlink,jdbcType=VARCHAR},
+      </if>
+      <if test="docbak != null">
+        docbak = #{docbak,jdbcType=INTEGER},
+      </if>
+      <if test="doccontent != null">
+        docContent = #{doccontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="dochtmlcon != null">
+        docHtmlCon = #{dochtmlcon,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="docpubhtmlcon != null">
+        docPubhtmlcon = #{docpubhtmlcon,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where docId = #{docid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.brain.bean.DocumentWithBLOBs">
+    update sun0769_document
+    set docChannel = #{docchannel,jdbcType=INTEGER},
+      docVersion = #{docversion,jdbcType=INTEGER},
+      docType = #{doctype,jdbcType=INTEGER},
+      docTitle = #{doctitle,jdbcType=VARCHAR},
+      docSourceName = #{docsourcename,jdbcType=VARCHAR},
+      docStatus = #{docstatus,jdbcType=INTEGER},
+      docAbstract = #{docabstract,jdbcType=VARCHAR},
+      docKeywords = #{dockeywords,jdbcType=VARCHAR},
+      docRelwords = #{docrelwords,jdbcType=VARCHAR},
+      docPeople = #{docpeople,jdbcType=VARCHAR},
+      docPlace = #{docplace,jdbcType=VARCHAR},
+      docAuthor = #{docauthor,jdbcType=VARCHAR},
+      docEditor = #{doceditor,jdbcType=VARCHAR},
+      docAuditor = #{docauditor,jdbcType=VARCHAR},
+      docOutupid = #{docoutupid,jdbcType=INTEGER},
+      docValid = #{docvalid,jdbcType=TIMESTAMP},
+      docPuburl = #{docpuburl,jdbcType=VARCHAR},
+      docPubtime = #{docpubtime,jdbcType=TIMESTAMP},
+      docReltime = #{docreltime,jdbcType=TIMESTAMP},
+      cruser = #{cruser,jdbcType=VARCHAR},
+      crtime = #{crtime,jdbcType=TIMESTAMP},
+      docwordscount = #{docwordscount,jdbcType=INTEGER},
+      docpro = #{docpro,jdbcType=INTEGER},
+      titleColor = #{titlecolor,jdbcType=VARCHAR},
+      templateId = #{templateid,jdbcType=INTEGER},
+      attribute = #{attribute,jdbcType=VARCHAR},
+      hiscount = #{hiscount,jdbcType=INTEGER},
+      subdoctitle = #{subdoctitle,jdbcType=VARCHAR},
+      attachpic = #{attachpic,jdbcType=INTEGER},
+      doclink = #{doclink,jdbcType=VARCHAR},
+      docFilename = #{docfilename,jdbcType=VARCHAR},
+      opertime = #{opertime,jdbcType=TIMESTAMP},
+      operuser = #{operuser,jdbcType=VARCHAR},
+      videoId = #{videoid,jdbcType=VARCHAR},
+      docClass = #{docclass,jdbcType=INTEGER},
+      isRec = #{isrec,jdbcType=SMALLINT},
+      docOrder = #{docorder,jdbcType=INTEGER},
+      _recurl = #{recurl,jdbcType=VARCHAR},
+      filePath = #{filepath,jdbcType=VARCHAR},
+      thumb = #{thumb,jdbcType=VARCHAR},
+      linkUrl = #{linkurl,jdbcType=VARCHAR},
+      tempid = #{tempid,jdbcType=INTEGER},
+      trsDocID = #{trsdocid,jdbcType=INTEGER},
+      parentPath = #{parentpath,jdbcType=VARCHAR},
+      imgLinks = #{imglinks,jdbcType=VARCHAR},
+      parentLink = #{parentlink,jdbcType=VARCHAR},
+      docbak = #{docbak,jdbcType=INTEGER},
+      docContent = #{doccontent,jdbcType=LONGVARCHAR},
+      docHtmlCon = #{dochtmlcon,jdbcType=LONGVARCHAR},
+      docPubhtmlcon = #{docpubhtmlcon,jdbcType=LONGVARCHAR}
+    where docId = #{docid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.brain.bean.Document">
+    update sun0769_document
+    set docChannel = #{docchannel,jdbcType=INTEGER},
+      docVersion = #{docversion,jdbcType=INTEGER},
+      docType = #{doctype,jdbcType=INTEGER},
+      docTitle = #{doctitle,jdbcType=VARCHAR},
+      docSourceName = #{docsourcename,jdbcType=VARCHAR},
+      docStatus = #{docstatus,jdbcType=INTEGER},
+      docAbstract = #{docabstract,jdbcType=VARCHAR},
+      docKeywords = #{dockeywords,jdbcType=VARCHAR},
+      docRelwords = #{docrelwords,jdbcType=VARCHAR},
+      docPeople = #{docpeople,jdbcType=VARCHAR},
+      docPlace = #{docplace,jdbcType=VARCHAR},
+      docAuthor = #{docauthor,jdbcType=VARCHAR},
+      docEditor = #{doceditor,jdbcType=VARCHAR},
+      docAuditor = #{docauditor,jdbcType=VARCHAR},
+      docOutupid = #{docoutupid,jdbcType=INTEGER},
+      docValid = #{docvalid,jdbcType=TIMESTAMP},
+      docPuburl = #{docpuburl,jdbcType=VARCHAR},
+      docPubtime = #{docpubtime,jdbcType=TIMESTAMP},
+      docReltime = #{docreltime,jdbcType=TIMESTAMP},
+      cruser = #{cruser,jdbcType=VARCHAR},
+      crtime = #{crtime,jdbcType=TIMESTAMP},
+      docwordscount = #{docwordscount,jdbcType=INTEGER},
+      docpro = #{docpro,jdbcType=INTEGER},
+      titleColor = #{titlecolor,jdbcType=VARCHAR},
+      templateId = #{templateid,jdbcType=INTEGER},
+      attribute = #{attribute,jdbcType=VARCHAR},
+      hiscount = #{hiscount,jdbcType=INTEGER},
+      subdoctitle = #{subdoctitle,jdbcType=VARCHAR},
+      attachpic = #{attachpic,jdbcType=INTEGER},
+      doclink = #{doclink,jdbcType=VARCHAR},
+      docFilename = #{docfilename,jdbcType=VARCHAR},
+      opertime = #{opertime,jdbcType=TIMESTAMP},
+      operuser = #{operuser,jdbcType=VARCHAR},
+      videoId = #{videoid,jdbcType=VARCHAR},
+      docClass = #{docclass,jdbcType=INTEGER},
+      isRec = #{isrec,jdbcType=SMALLINT},
+      docOrder = #{docorder,jdbcType=INTEGER},
+      _recurl = #{recurl,jdbcType=VARCHAR},
+      filePath = #{filepath,jdbcType=VARCHAR},
+      thumb = #{thumb,jdbcType=VARCHAR},
+      linkUrl = #{linkurl,jdbcType=VARCHAR},
+      tempid = #{tempid,jdbcType=INTEGER},
+      trsDocID = #{trsdocid,jdbcType=INTEGER},
+      parentPath = #{parentpath,jdbcType=VARCHAR},
+      imgLinks = #{imglinks,jdbcType=VARCHAR},
+      parentLink = #{parentlink,jdbcType=VARCHAR},
+      docbak = #{docbak,jdbcType=INTEGER}
+    where docId = #{docid,jdbcType=INTEGER}
+  </update>
+</mapper>
