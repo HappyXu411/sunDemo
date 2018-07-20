@@ -67,11 +67,11 @@
 		//显示页面
 		function toPage(str,pn){
 			$.ajax({
-				url:"${APP_PATH}/docs/findByTitle/" + title,
-				data:"pn=" + pn,
+				url:"/sunDemo/findByTitle" ,
+				data:"title="+title+"&pn="+pn,
 				type:"get",
 				success:function(result){
-					console.log(result);
+					//console.log(result);
 					//1.解析并显示文章数据
 					build_docs_table(result);
 					//2.解析并显示分页信息

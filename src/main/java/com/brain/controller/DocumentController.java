@@ -1,5 +1,7 @@
 package com.brain.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +35,7 @@ public class DocumentController {
 	@Autowired
 	private DocumentService documentService;
 	
+    
 	
 	public List<DocumentInfo> splitArray(List<DocumentInfo> docList,int index){
 		int length = 20;
@@ -62,16 +65,16 @@ public class DocumentController {
     }*/
     
 	@RequestMapping("/docs")
-	@ResponseBody
     public Msg docList1(@RequestParam(value="index",defaultValue="0")Integer index) {
-        List<DocumentInfo> docList = documentService.getAll();
+		List<DocumentInfo> docList = documentService.getAll();
         List<DocumentInfo> resultList = splitArray(docList,index);
         
-        return Msg.success().add("docList",resultList);
+        return Msg.success().add("docLists",resultList);
     }
 	
 	/**
 	 * 单独的员工信息查询
+	 * @throws UnsupportedEncodingException 
 	 */
 	/*@RequestMapping(value="/doc/{id}",method=RequestMethod.GET)
 	@ResponseBody
@@ -80,16 +83,12 @@ public class DocumentController {
 		return Msg.success().add("doc", document);
 	}*/
 	
-	@RequestMapping(value="/findByTitle/{title}",method=RequestMethod.GET)  
+	@RequestMapping(value="/findByTitle",method=RequestMethod.GET)  
     @ResponseBody  
-	public Msg getDocByTitle(@PathVariable("title")String title,@RequestParam(value="pn",defaultValue="1")Integer pn) {
+	public Msg getDocByTitle(@RequestParam(value="title")String title,@RequestParam(value="pn",defaultValue="1")Integer pn) throws UnsupportedEncodingException {
 		//引入PageHelper分页插件,穿入页码，以及每页的大小
 		PageHelper.startPage(pn, 5);
-		try {
-			title = new String(title.getBytes("ISO-8859-1"), "utf8");
-		} catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
-        }
+		title = java.net.URLDecoder.decode(title,"UTF-8");
 		List<Document> docs = documentService.getDocByTitle(title);
 		PageInfo page = new PageInfo(docs,5);
 		return Msg.success().add("pageInfo",page);
