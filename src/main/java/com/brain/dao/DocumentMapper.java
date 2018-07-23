@@ -21,6 +21,8 @@ public interface DocumentMapper {
 
     List<Document> selectByExample(DocumentExample example);
     
+    List<Document> selectByLimit(int start,int pageNum);
+    
     List<Document> selectByTitle(String title);
 
     DocumentWithBLOBs selectByPrimaryKey(Integer docid);

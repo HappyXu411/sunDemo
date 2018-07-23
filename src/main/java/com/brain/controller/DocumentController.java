@@ -1,5 +1,7 @@
 package com.brain.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import javax.swing.JOptionPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,12 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import com.brain.bean.Document;
 import com.brain.bean.Msg;
 import com.brain.pojo.DocumentInfo;
 import com.brain.service.DocumentService;
+import com.brain.utils.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -65,11 +69,10 @@ public class DocumentController {
     }*/
     
 	@RequestMapping("/docs")
-    public Msg docList1(@RequestParam(value="index",defaultValue="0")Integer index) {
-		List<DocumentInfo> docList = documentService.getAll();
-        List<DocumentInfo> resultList = splitArray(docList,index);
+    public Msg docList1(@RequestParam(value="index",defaultValue="0")int index) {
+		Page<Document> docList = documentService.findByPage(index,20);
         
-        return Msg.success().add("docLists",resultList);
+        return Msg.success().add("docLists",docList);
     }
 	
 	/**
@@ -83,12 +86,12 @@ public class DocumentController {
 		return Msg.success().add("doc", document);
 	}*/
 	
-	@RequestMapping(value="/findByTitle",method=RequestMethod.GET)  
-    @ResponseBody  
+	@RequestMapping(value="/findByTitle",method=RequestMethod.GET) 
+	@ResponseBody
 	public Msg getDocByTitle(@RequestParam(value="title")String title,@RequestParam(value="pn",defaultValue="1")Integer pn) throws UnsupportedEncodingException {
 		//引入PageHelper分页插件,穿入页码，以及每页的大小
 		PageHelper.startPage(pn, 5);
-		title = java.net.URLDecoder.decode(title,"UTF-8");
+		title = URLDecoder.decode(title,"UTF-8");
 		List<Document> docs = documentService.getDocByTitle(title);
 		PageInfo page = new PageInfo(docs,5);
 		return Msg.success().add("pageInfo",page);

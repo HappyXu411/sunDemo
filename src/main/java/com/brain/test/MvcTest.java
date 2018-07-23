@@ -43,12 +43,12 @@ public class MvcTest {
 	public void initMockMvc(){
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
-	/*
+	
 	@Test
 	public void testPage() throws Exception {
 		
 		//模拟请求拿到返回值
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/docs")).andReturn();
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/findByTitle").param("title","我镇")).andReturn();
 		//模拟成功后，请求域中会有pageInfo，我们可以取出pageInfo进行验证
 		MockHttpServletRequest request = result.getRequest();
 		PageInfo pi = (PageInfo) request.getAttribute("pageInfo");
@@ -65,5 +65,5 @@ public class MvcTest {
 		for (Document document : list) {
 			System.out.println("ID, " + document.getDocid() + "==>Title:" + document.getDoctitle());
 		}
-	}*/
+	}
 }

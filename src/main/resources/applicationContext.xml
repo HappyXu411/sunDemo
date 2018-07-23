@@ -17,13 +17,13 @@
 	http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-4.2.xsd">
     
-    <!--使用spring组件扫描
-    	一次性配置此包下所有的Handler-->
-    <context:component-scan base-package="com.brain">
-    	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
     
     <!-- Spring的配置文件，这里主要配置和业务逻辑有关的 -->
+	 <context:component-scan base-package="com.brain">
+		<!--只扫描控制器 -->
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
     <!-- 数据源，事务控制 -->
     <!-- 加载配置文件 -->
 	<context:property-placeholder location="classpath:dbconfig.properties" />

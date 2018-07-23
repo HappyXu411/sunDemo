@@ -172,6 +172,12 @@
     from sun0769_document
     where docTitle like "%${_parameter}%"
   </select>
+  <select id="selectByLimit" resultMap="BaseResultMap">
+    select 
+    <include refid="Title_Column_List" />
+    from sun0769_document
+    limit #{start,jdbcType=INTEGER},#{pageNum,jdbcType=INTEGER}
+  </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sun0769_document
